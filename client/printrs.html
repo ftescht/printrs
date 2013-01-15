@@ -1,0 +1,167 @@
+<head>
+    <title>Cartridges</title>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="brand" href="/">Cartridges</a>
+            <ul class="nav">
+                <li>
+                    <a href="#addCartridgeWindow" data-toggle="modal">Add cartridge</a>
+                <li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div id="alertBox" class="span12"></div>
+            <div class="span3">
+                <legend>Cartridges</legend>
+                {{> cartridgesList}}
+            </div>
+            <div class="span9">
+                <div id="cartridgeBox"></div>
+                <div id="eventsPlace"></div>
+            </div>
+        </div>
+    </div>
+
+    {{> newCartridge}}
+    {{> newEvent}}
+
+</body>
+
+
+<template name="newCartridge">
+    <div id="addCartridgeWindow" class="modal hide fade" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Add Cartridge</h3>
+        </div>
+        <div class="modal-body">
+            <div id="newCartridgeAlertBox"></div>
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="newCartridgeName">Name</label>
+                    <div class="controls">
+                        <input id="newCartridgeName" type="text" placeholder="Name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="newCartridgeName">Description</label>
+                    <div class="controls">
+                        <input id="newCartridgeDescr" type="text" placeholder="Description">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary yes">Save</button>
+        </div>
+    </div>
+</template>
+
+<template name="newEvent">
+    <div id="addEventWindow" class="modal hide fade" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Add Cartridge</h3>
+        </div>
+        <div class="modal-body">
+            <div id="newEventAlertBox"></div>
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="newEventTypeId">Event</label>
+                    <div class="controls">
+                        {{> eventTypesList}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="newEventDate">Date</label>
+                    <div class="controls">
+                        <input id="newEventDate" class="datepicker uneditable-input" data-date-format="dd.mm.yyyy" type="text" placeholder="Date">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="newEventComment">Comment</label>
+                    <div class="controls">
+                        <input id="newEventComment" type="text" placeholder="Comment">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary yes">Save</button>
+        </div>
+    </div>
+</template>
+
+<template name="cartridgesList">
+    <ul id="cartridgesList" class="nav nav-tabs nav-stacked">
+        {{#each cartridges}}
+            <li>
+                <a id="{{_id}}" class="cartridge" href="#" title="{{descr}}">{{name}}</a>
+            </li>
+        {{/each}}
+    </ul>
+</template>
+
+<template name="curCartridge">
+    {{#if cartridge}}
+        <legend>
+            {{cartridge.name}}
+            <div class="btn-group pull-right">
+                <a href="#addEventWindow" class="btn" data-toggle="modal">Add event</a>
+                <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">No</a></li>
+                    <li><a id="removeCurCartridge" href="#">Yes</a></li>
+                </ul>
+            </div>
+        </legend>
+    {{/if}}
+</template>
+
+<template name="eventTypesList">
+    <select id="newEventTypeId">
+        {{#each eventTypes}}
+            <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select>
+</template>
+
+<template name="eventsList">
+    <table class="table table-bordered table-hover" width="100%">
+        <thead>
+            <tr>
+                <th width="15%">Date</th>
+                <th width="30%">Event</th>
+                <th>Comment</th>
+                <th width="55">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+             {{#each eventsList}}
+                <tr class="{{eventColor}}">
+                    <td>{{date}}</td>
+                    <td>{{eventName}}</td>
+                    <td>{{comment}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-danger btn-mini dropdown-toggle" data-toggle="dropdown">Remove</button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">No</a></li>
+                                <li><a class="yes" href="#">Yes</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</template>
