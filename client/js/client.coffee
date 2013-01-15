@@ -3,14 +3,34 @@ selectedCartridgeId = 0
 
 Meteor.startup ()->
     $('#addEventWindow').on 'shown', ()->
-        $('#newEventDate').datepicker()
+        $('#newEventDate').val $.format.date(new Date(), "dd.MM.yyyy")
+
+        $('#newEventDate').datepicker
+            format: "dd.mm.yyyy"
+            weekStart: 1
+
+        $('#newEventDate').datepicker().on 'changeDate', (e)->
+            $('#newEventDate').datepicker('hide')
+            $('#newEventDate').val $.format.date(e.date, "dd.MM.yyyy")
+
+        $('#newEventDateIcon').click ()->
+            $('#newEventDate').datepicker('show')
+
+    $('#addEventWindow').on 'hide', ()->
+        $("#newEventComment").val("")
+        if $("div.datepicker.dropdown-menu:visible").length > 0
+            $('#newEventDate').datepicker('hide')
+
+    $('#addCartridgeWindow').on 'hide', ()->
+        $("#newCartridgeName").val("")
+        $("#newCartridgeDescr").val("")
 
 alertBox = (id, text) ->
     alertHtml = '<div class="alert"><a class="close" data-dismiss="alert" href="#">&times;</a><strong>'+text+'</strong></div>'
     $("#"+id).html(alertHtml)
 
 Template.eventTypesList.eventTypes = ()->
-    return EventTypes.find({})
+    return EventTypes.find({}, {sort: {id: 1}})
 
 Template.cartridgesList.cartridges = ()->
     return Cartridges.find({}, {sort: {name: 1}})
@@ -29,6 +49,16 @@ Template.eventsList.eventColor = ()->
         when '3' then return "warning"
         when '4' then return "info"
 
+Template.cartridgesList.stateStyle = ()->
+    curCartridgeId = this._id
+    if lastEvent = Events.findOne({cartridgeId: curCartridgeId}, {sort: {date: -1}})
+        switch lastEvent.typeId
+            when '1' then return "greenState"
+            when '2' then return "redState"
+            when '3' then return "orangeState"
+            when '4' then return "blueState"
+    return ""
+
 Template.cartridgesList.events
     'click a': () ->
         if selectedCartridgeId != 0
@@ -37,14 +67,13 @@ Template.cartridgesList.events
         $("#"+selectedCartridgeId).parent().addClass("active")
         $("#eventsPlace").html Meteor.render ->
             Template.eventsList
-                eventsList: Events.find({cartridgeId: selectedCartridgeId})
+                eventsList: Events.find({cartridgeId: selectedCartridgeId}, {sort: {date: -1}})
         $("#cartridgeBox").html Meteor.render ->
             Template.curCartridge
                 cartridge: Cartridges.findOne({_id: selectedCartridgeId})
 
 Template.eventsList.events
     'click a.yes': () ->
-        console.log this
         Events.remove
             _id: this._id
 
@@ -68,10 +97,7 @@ Template.newCartridge.events
         Cartridges.insert
             name: cartridgeName
             descr: cartridgeDescr
-        $("#newCartridgeName").val("")
-        $("#newCartridgeDescr").val("")
         $('#addCartridgeWindow').modal('hide')
-
 
 Template.newEvent.events
     'click button.yes': () ->
@@ -98,6 +124,4 @@ Template.newEvent.events
                 typeId: eventTypeId
                 date: eventDate
                 comment: eventComment
-            $("#newEventDate").val("")
-            $("#newEventComment").val("")
             $('#addEventWindow').modal('hide')
