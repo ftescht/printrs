@@ -49,6 +49,7 @@
         <div class="modal-body">
             <div id="newCartridgeAlertBox"></div>
             <div class="form-horizontal">
+                <input id="cartridgeId" type="hidden">
                 <div class="control-group">
                     <label class="control-label" for="newCartridgeName">Name</label>
                     <div class="controls">
@@ -79,6 +80,7 @@
         <div class="modal-body">
             <div id="newEventAlertBox"></div>
             <div class="form-horizontal">
+                <input id="eventId" type="hidden">
                 <div class="control-group">
                     <label class="control-label" for="newEventTypeId">Event</label>
                     <div class="controls">
@@ -128,6 +130,7 @@
             {{cartridge.name}}
             <div class="btn-group pull-right">
                 <a href="#addEventWindow" class="btn" data-toggle="modal">Add event</a>
+                <a href="#" class="editCurCartridge btn">Edit</a>
                 <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
                 <ul class="dropdown-menu">
                     <li><a href="#">No</a></li>
@@ -150,10 +153,10 @@
     <table class="table table-bordered table-hover" width="100%">
         <thead>
             <tr>
-                <th width="15%">Date</th>
-                <th width="30%">Event</th>
+                <th width="70">Date</th>
+                <th width="140">Event</th>
                 <th>Comment</th>
-                <th width="55">Remove</th>
+                <th width="86"></th>
             </tr>
         </thead>
         <tbody>
@@ -164,10 +167,11 @@
                     <td>{{comment}}</td>
                     <td>
                         <div class="btn-group">
+                            <button class="editEvent btn btn-mini">Edit</button>
                             <button class="btn btn-danger btn-mini dropdown-toggle" data-toggle="dropdown">Remove</button>
                             <ul class="dropdown-menu">
                                 <li><a href="#">No</a></li>
-                                <li><a class="yes" href="#">Yes</a></li>
+                                <li><a class="removeEvent" href="#">Yes</a></li>
                             </ul>
                         </div>
                     </td>

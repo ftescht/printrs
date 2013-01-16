@@ -3,7 +3,8 @@ selectedCartridgeId = 0
 
 Meteor.startup ()->
     $('#addEventWindow').on 'shown', ()->
-        $('#newEventDate').val $.format.date(new Date(), "dd.MM.yyyy")
+        if $('#newEventDate').val() == ""
+            $('#newEventDate').val $.format.date(new Date(), "dd.MM.yyyy")
 
         $('#newEventDate').datepicker
             format: "dd.mm.yyyy"
@@ -17,11 +18,14 @@ Meteor.startup ()->
             $('#newEventDate').datepicker('show')
 
     $('#addEventWindow').on 'hide', ()->
+        $("#eventId").val("")
         $("#newEventComment").val("")
+        $('#newEventDate').val("")
         if $("div.datepicker.dropdown-menu:visible").length > 0
             $('#newEventDate').datepicker('hide')
 
     $('#addCartridgeWindow').on 'hide', ()->
+        $("#cartridgeId").val("")
         $("#newCartridgeName").val("")
         $("#newCartridgeDescr").val("")
 
@@ -51,7 +55,7 @@ Template.eventsList.eventColor = ()->
 
 Template.cartridgesList.stateStyle = ()->
     curCartridgeId = this._id
-    if lastEvent = Events.findOne({cartridgeId: curCartridgeId}, {sort: {date: -1}})
+    if lastEvent = Events.findOne({cartridgeId: curCartridgeId}, {sort: {date: -1, lastChanges: -1}})
         switch lastEvent.typeId
             when '1' then return "greenState"
             when '2' then return "redState"
@@ -67,17 +71,28 @@ Template.cartridgesList.events
         $("#"+selectedCartridgeId).parent().addClass("active")
         $("#eventsPlace").html Meteor.render ->
             Template.eventsList
-                eventsList: Events.find({cartridgeId: selectedCartridgeId}, {sort: {date: -1}})
+                eventsList: Events.find({cartridgeId: selectedCartridgeId}, {sort: {date: -1, lastChanges: -1}})
         $("#cartridgeBox").html Meteor.render ->
             Template.curCartridge
                 cartridge: Cartridges.findOne({_id: selectedCartridgeId})
 
 Template.eventsList.events
-    'click a.yes': () ->
+    'click button.editEvent': ()->
+        $('#addEventWindow').modal('show')
+        $("#eventId").val this._id
+        $("#newEventTypeId").val this.typeId
+        $("#newEventDate").val this.date
+        $("#newEventComment").val this.comment
+    'click a.removeEvent': () ->
         Events.remove
             _id: this._id
 
 Template.curCartridge.events
+    'click a.editCurCartridge': ()->
+        $('#addCartridgeWindow').modal('show')
+        $("#cartridgeId").val this.cartridge._id
+        $("#newCartridgeName").val this.cartridge.name
+        $("#newCartridgeDescr").val this.cartridge.descr
     'click #removeCurCartridge': () ->
         Events.remove
             cartridgeId: selectedCartridgeId
@@ -86,7 +101,6 @@ Template.curCartridge.events
         selectedCartridgeId = 0
         $("#cartridgeBox").html ""
 
-
 Template.newCartridge.events
     'click button.yes': () ->
         cartridgeName = $("#newCartridgeName").val()
@@ -94,9 +108,22 @@ Template.newCartridge.events
             alertBox "newCartridgeAlertBox", "Name can't be blank"
             return null
         cartridgeDescr = $("#newCartridgeDescr").val()
-        Cartridges.insert
-            name: cartridgeName
-            descr: cartridgeDescr
+
+        if $("#cartridgeId").val() != ""
+            selector =
+                _id: $("#cartridgeId").val()
+            modifier =
+                $set:
+                    lastChanges: new Date()
+                    name: cartridgeName
+                    descr: cartridgeDescr
+            Cartridges.update selector, modifier
+        else
+            Cartridges.insert
+                creationDate: new Date()
+                lastChanges: new Date()
+                name: cartridgeName
+                descr: cartridgeDescr
         $('#addCartridgeWindow').modal('hide')
 
 Template.newEvent.events
@@ -114,14 +141,27 @@ Template.newEvent.events
             error += "<li>Event type not selected</li>"
         if eventDate.length == 0
             error += "<li>Date can't be blank</li>"
-        
         if error != "<ul>"
             error += "</ul>"
             alertBox "newEventAlertBox", error
+            return null
+
+        if $("#eventId").val() != ""
+            selector =
+                _id: $("#eventId").val()
+            modifier =
+                $set:
+                    lastChanges: new Date()
+                    typeId: eventTypeId
+                    date: eventDate
+                    comment: eventComment
+            Events.update selector, modifier
         else
             Events.insert
+                creationDate: new Date()
+                lastChanges: new Date()
                 cartridgeId: eventCartridgeId
                 typeId: eventTypeId
                 date: eventDate
                 comment: eventComment
-            $('#addEventWindow').modal('hide')
+        $('#addEventWindow').modal('hide')
