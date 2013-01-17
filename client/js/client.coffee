@@ -1,4 +1,15 @@
 
+Meteor.subscribe "all-users"
+
+Meteor.subscribe "all-eventtypes"
+EventTypes = new Meteor.Collection "eventTypes"
+
+Meteor.subscribe "all-cartridges"
+Cartridges = new Meteor.Collection "cartridges"
+
+Meteor.subscribe "all-events"
+Events = new Meteor.Collection "events"
+
 selectedCartridgeId = 0
 
 Meteor.startup ()->
@@ -17,21 +28,73 @@ Meteor.startup ()->
         $('#newEventDateIcon').click ()->
             $('#newEventDate').datepicker('show')
 
-    $('#addEventWindow').on 'hide', ()->
+    $('#addEventWindow').on 'hidden', ()->
         $("#eventId").val("")
         $("#newEventComment").val("")
         $('#newEventDate').val("")
         if $("div.datepicker.dropdown-menu:visible").length > 0
             $('#newEventDate').datepicker('hide')
 
-    $('#addCartridgeWindow').on 'hide', ()->
+    $('#addCartridgeWindow').on 'hidden', ()->
         $("#cartridgeId").val("")
         $("#newCartridgeName").val("")
         $("#newCartridgeDescr").val("")
 
+    $('#loginWindow').on 'hidden', ()->
+        $("#loginLogin").val("")
+        $("#loginPassword").val("")
+
+    $('#registerWindow').on 'hidden', ()->
+        $("#registerLogin").val("")
+        $("#registerPassword").val("")
+
 alertBox = (id, text) ->
     alertHtml = '<div class="alert"><a class="close" data-dismiss="alert" href="#">&times;</a><strong>'+text+'</strong></div>'
     $("#"+id).html(alertHtml)
+
+Template.users.users = ()->
+    return Meteor.users.find()
+
+Template.users.usergroup = ()->
+    console.log 
+    return this.group
+
+Template.users.events
+    'click a.removeUser': () ->
+        console.log this
+        Meteor.users.remove
+            _id: this._id
+
+Template.user.isLogin = ()->
+    return Meteor.user() != null
+
+Template.user.events
+    'click #logoutLink': () ->
+        Meteor.logout()
+        $("#eventsPlace").html("")
+        $("#cartridgeBox").html("")
+
+Template.login.events
+    'click #loginBtn': () ->
+        err = 0
+        login = $("#loginLogin").val()
+        pass = $("#loginPassword").val()
+        Meteor.loginWithPassword {username: login}, pass, (data) ->
+            if data != undefined
+                alertBox 'loginAlertBox', data.reason
+            else
+                $('#loginWindow').modal('hide')
+
+Template.register.events
+    'click #registerBtn': () ->
+        err = 0
+        login = $("#registerLogin").val()
+        pass = $("#registerPassword").val()
+        Accounts.createUser {username: login, password: pass}, (data) ->
+            if data != undefined
+                alertBox 'registerAlertBox', data.reason
+            else
+                $('#registerWindow').modal('hide')
 
 Template.eventTypesList.eventTypes = ()->
     return EventTypes.find({}, {sort: {id: 1}})
@@ -54,14 +117,22 @@ Template.eventsList.eventColor = ()->
         when '4' then return "info"
 
 Template.cartridgesList.stateStyle = ()->
-    curCartridgeId = this._id
-    if lastEvent = Events.findOne({cartridgeId: curCartridgeId}, {sort: {date: -1, lastChanges: -1}})
-        switch lastEvent.typeId
-            when '1' then return "greenState"
-            when '2' then return "redState"
-            when '3' then return "orangeState"
-            when '4' then return "blueState"
+    switch this.lastState
+        when '1' then return "greenState"
+        when '2' then return "redState"
+        when '3' then return "orangeState"
+        when '4' then return "blueState"
     return ""
+
+Template.cartridgesList.cartridgeSelectedClass = ()->
+    return "active" if this._id == selectedCartridgeId
+    return ""
+
+Template.cartridgesList.rendered = () ->
+    $('a[rel="tooltip"]').tooltip({placement: 'right'})
+
+Template.cartridgesList.isLogin = ()->
+    return Meteor.user() != null
 
 Template.cartridgesList.events
     'click a': () ->
@@ -104,7 +175,7 @@ Template.curCartridge.events
 Template.newCartridge.events
     'click button.yes': () ->
         cartridgeName = $("#newCartridgeName").val()
-        if cartridgeName.length < 3
+        if cartridgeName.length <= 3
             alertBox "newCartridgeAlertBox", "Name can't be blank"
             return null
         cartridgeDescr = $("#newCartridgeDescr").val()
@@ -114,14 +185,11 @@ Template.newCartridge.events
                 _id: $("#cartridgeId").val()
             modifier =
                 $set:
-                    lastChanges: new Date()
                     name: cartridgeName
                     descr: cartridgeDescr
             Cartridges.update selector, modifier
         else
             Cartridges.insert
-                creationDate: new Date()
-                lastChanges: new Date()
                 name: cartridgeName
                 descr: cartridgeDescr
         $('#addCartridgeWindow').modal('hide')
@@ -151,17 +219,16 @@ Template.newEvent.events
                 _id: $("#eventId").val()
             modifier =
                 $set:
-                    lastChanges: new Date()
                     typeId: eventTypeId
                     date: eventDate
                     comment: eventComment
             Events.update selector, modifier
         else
             Events.insert
-                creationDate: new Date()
-                lastChanges: new Date()
                 cartridgeId: eventCartridgeId
                 typeId: eventTypeId
                 date: eventDate
                 comment: eventComment
         $('#addEventWindow').modal('hide')
+
+

@@ -9,9 +9,10 @@
             <a class="brand" href="/">Cartridges</a>
             <ul class="nav">
                 <li>
-                    <a href="#addCartridgeWindow" data-toggle="modal">Add cartridge</a>
-                <li>
+                   <a href="#usersWindow" data-toggle="modal">Users</a>
+                </li>
             </ul>
+            {{> user}}
         </div>
     </div>
 
@@ -19,7 +20,6 @@
         <div class="row">
             <div id="alertBox" class="span12"></div>
             <div class="span3">
-                <legend>Cartridges</legend>
                 {{> cartridgesList}}
             </div>
             <div class="span9">
@@ -36,9 +36,99 @@
 
     {{> newCartridge}}
     {{> newEvent}}
+    {{> users}}
+    {{> login}}
+    {{> register}}
 
 </body>
 
+<template name="users">
+    <div id="usersWindow" class="modal hide fade" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Users</h3>
+        </div>
+        <div class="modal-body">
+            <div id="usersAlertBox"></div>
+            <table class="table table-bordered table-hover" width="100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Group</th>
+                        <th width="55"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                     {{#each users}}
+                        <tr>
+                            <td>{{username}}</td>
+                            <td>{{usergroup}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-danger btn-mini dropdown-toggle" data-toggle="dropdown">Remove</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">No</a></li>
+                                        <li><a class="removeUser" href="#">Yes</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="user">
+<ul class="nav pull-right">
+    {{#if isLogin}}
+        <li>
+            <a id="curUserLink" href="#" >{{currentUser.username}}</a>
+        </li>
+        <li>
+            <a id="logoutLink" href="#" >Logout</a>
+        </li>
+    {{else}}
+        <li>
+            <a data-toggle="modal" href="#loginWindow" >Login</a>
+        </li>
+        <li>
+            <a data-toggle="modal" href="#registerWindow" >Register</a>
+        </li>
+    {{/if}}
+</ul>
+</template>
+
+<template name="login">
+    <div class="modal hide" id="loginWindow">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Login</h3>
+        </div>
+        <div class="modal-body">
+            <div id="loginAlertBox"></div>
+            <p><input id="loginLogin" type="text" class="span3" placeholder="Login"></p>
+            <p><input id="loginPassword" type="password" class="span3" placeholder="Password"></p>
+            <p><button id="loginBtn" type="submit" class="btn btn-primary">Sign in</button></p>
+        </div>
+    </div>
+</template>
+
+<template name="register">
+    <div class="modal hide" id="registerWindow">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Register</h3>
+        </div>
+        <div class="modal-body">
+            <div id="loginAlertBox"></div>
+            <p><input id="registerLogin" type="text" class="span3" placeholder="Login"></p>
+            <p><input id="registerPassword" type="password" class="span3" placeholder="Password"></p>
+            <p><button id="registerBtn" type="submit" class="btn btn-primary">Register</button></p>
+        </div>
+    </div>
+</template>
 
 <template name="newCartridge">
     <div id="addCartridgeWindow" class="modal hide fade" role="dialog">
@@ -90,7 +180,7 @@
                 <div class="control-group">
                     <label class="control-label" for="newEventDate">Date</label>
                     <div class="controls">
-                        <div class="input-append datepicker">
+                        <div class="input-append">
                             <input id="newEventDate" class="span2 uneditable-input" type="text" placeholder="Date" data-date-format="dd.mm.yyyy" disabled>
                             <span id="newEventDateIcon" class="add-on"><i class="icon-calendar"></i></span>
                         </div>
@@ -112,16 +202,24 @@
 </template>
 
 <template name="cartridgesList">
+    {{#if isLogin}}
+    <legend>
+        Cartridges
+        <div class="btn-group pull-right">
+            <a href="#addCartridgeWindow" class="btn btn-small" data-toggle="modal">Add cartridge</a>
+        </div>
+    </legend>
     <ul id="cartridgesList" class="nav nav-tabs nav-stacked">
         {{#each cartridges}}
-            <li>
-                <a id="{{_id}}" class="cartridge {{stateStyle}}" href="#" title="{{descr}}">
+            <li class="{{cartridgeSelectedClass}}">
+                <a id="{{_id}}" class="cartridge {{stateStyle}}" href="#" rel="tooltip" title="{{descr}}">
                     <i class="icon-chevron-right"></i>
                     {{name}}
                 </a>
             </li>
         {{/each}}
     </ul>
+    {{/if}}
 </template>
 
 <template name="curCartridge">
@@ -129,9 +227,9 @@
         <legend>
             {{cartridge.name}}
             <div class="btn-group pull-right">
-                <a href="#addEventWindow" class="btn" data-toggle="modal">Add event</a>
-                <a href="#" class="editCurCartridge btn">Edit</a>
-                <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
+                <a href="#addEventWindow" class="btn btn-small" data-toggle="modal">Add event</a>
+                <a href="#" class="editCurCartridge btn btn-small">Edit</a>
+                <button class="btn btn-small btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
                 <ul class="dropdown-menu">
                     <li><a href="#">No</a></li>
                     <li><a id="removeCurCartridge" href="#">Yes</a></li>
@@ -180,3 +278,4 @@
         </tbody>
     </table>
 </template>
+
