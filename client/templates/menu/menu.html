@@ -1,0 +1,14 @@
+<template name="menu">
+
+<ul class="nav">
+    {{#if isLogin}}
+        {{#if isAdmin}}
+            <li>
+                <a href="#usersWindow" data-toggle="modal">Users</a>
+            </li>
+        {{/if}}
+    {{else}}
+    {{/if}}
+</ul>
+
+</template>

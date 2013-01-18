@@ -1,0 +1,21 @@
+<template name="cartridgesList">
+
+<legend>
+    Cartridges
+    <div class="btn-group pull-right">
+        <a href="#addCartridgeWindow" class="btn btn-small" data-toggle="modal">Add cartridge</a>
+    </div>
+</legend>
+
+<ul id="cartridgesList" class="nav nav-tabs nav-stacked">
+    {{#each cartridges}}
+        <li class="{{cartridgeSelectedClass}}">
+            <a id="{{_id}}" class="cartridge {{stateStyle}}" href="#" rel="tooltip" title="{{descr}}">
+                <i class="icon-chevron-right"></i>
+                {{name}}
+            </a>
+        </li>
+    {{/each}}
+</ul>
+
+</template>

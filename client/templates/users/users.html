@@ -1,0 +1,39 @@
+<template name="users">
+
+<div id="usersWindow" class="modal hide fade" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Users</h3>
+    </div>
+    <div class="modal-body">
+        <div id="usersAlertBox"></div>
+        <table class="table table-bordered table-hover" width="100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Group</th>
+                    <th width="55"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                    <tr>
+                        <td>{{username}}</td>
+                        <td>{{usergroup}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-danger btn-mini dropdown-toggle" data-toggle="dropdown">Remove</button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">No</a></li>
+                                    <li><a class="removeUser" href="#">Yes</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</template>

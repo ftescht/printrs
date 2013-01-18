@@ -1,0 +1,32 @@
+<template name="newCartridge">
+
+<div id="addCartridgeWindow" class="modal hide fade" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Add Cartridge</h3>
+    </div>
+    <div class="modal-body">
+        <div id="newCartridgeAlertBox"></div>
+        <div class="form-horizontal">
+        <input id="cartridgeId" type="hidden">
+        <div class="control-group">
+            <label class="control-label" for="newCartridgeName">Name</label>
+            <div class="controls">
+                <input id="newCartridgeName" type="text" placeholder="Name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="newCartridgeName">Description</label>
+            <div class="controls">
+                <input id="newCartridgeDescr" type="text" placeholder="Description">
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary yes">Save</button>
+    </div>
+</div>
+
+</template>
