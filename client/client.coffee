@@ -4,6 +4,9 @@ Meteor.subscribe "all-users"
 Meteor.subscribe "all-eventtypes"
 EventTypes = new Meteor.Collection "eventTypes"
 
+Meteor.subscribe "all-printers"
+Printers = new Meteor.Collection "printers"
+
 Meteor.subscribe "all-cartridges"
 Cartridges = new Meteor.Collection "cartridges"
 

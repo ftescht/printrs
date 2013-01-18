@@ -48,37 +48,32 @@ handle = query.observe
 
 Events.allow
     insert: (userId, item) ->
-        if userId == null
-            return false
-        user = Meteor.users.findOne({'_id': userId})
-        if user == undefined or user.group != 'admin'
-            return false
-        if checkNewEventModel item
-            now = new Date()
-            item.creationDate = now
-            item.lastChanges = now
-            item.owner = userId
-            return true
+        if userId != null
+            user = Meteor.users.findOne({'_id': userId})
+            if user != undefined and user.group == 'admin'
+                if checkNewEventModel item
+                    now = new Date()
+                    item.creationDate = now
+                    item.lastChanges = now
+                    item.owner = userId
+                    return true
         return false
 
     update: (userId, items, fields, modifier) ->
-        if userId == null
-            return false
-        user = Meteor.users.findOne({'_id': userId})
-        if user == undefined or user.group != 'admin'
-            return false
-        if checkUpdateEventModel items, fields, modifier
-            now = new Date()
-            fields.push "lastChanges"
-            modifier["$set"].lastChanges = now
-            return true
+        if userId != null
+            user = Meteor.users.findOne({'_id': userId})
+            if user != undefined and user.group == 'admin'
+                if checkUpdateEventModel items, fields, modifier
+                    now = new Date()
+                    fields.push "lastChanges"
+                    modifier["$set"].lastChanges = now
+                    return true
         return false
 
     remove: (userId, items) ->
-        if userId == null
-            return false
-        user = Meteor.users.findOne({'_id': userId})
-        if user == undefined or user.group != 'admin'
-            return false
-        return true
+        if userId != null
+            user = Meteor.users.findOne({'_id': userId})
+            if user != undefined and user.group == 'admin'
+                return true
+        return false
 

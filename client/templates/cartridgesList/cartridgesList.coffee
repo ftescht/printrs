@@ -3,6 +3,12 @@ Template.cartridgesList.selectedCartridgeId =  0
 Template.cartridgesList.cartridges = ()->
     return Cartridges.find({}, {sort: {name: 1}})
 
+Template.cartridgesList.isAdmin = ()->
+    return Meteor.user() != null and Meteor.user().group == 'admin'
+
+Template.cartridgesList.isVisible = ()->
+    return Template.cartridgesList.cartridges().count() > 0 or Template.cartridgesList.isAdmin()
+
 Template.cartridgesList.stateStyle = ()->
     switch this.lastState
         when '1' then return "greenState"

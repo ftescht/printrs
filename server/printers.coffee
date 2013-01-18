@@ -1,18 +1,18 @@
-Cartridges = new Meteor.Collection "cartridges"
+Printers = new Meteor.Collection "printers"
 
-Meteor.publish "all-cartridges", ()->
+Meteor.publish "all-printers", ()->
     user = Meteor.users.findOne({'_id': this.userId})
     if user != undefined and user.group == 'admin'
-        return Cartridges.find()
+        return Printers.find()
     return null
 
-checkNewCartridgeModel = (item) ->
+checkNewPrinterModel = (item) ->
     err =   Object.keys(item).length == 3
     err &= item.name.length > 3
     err &= item.descr != undefined
     return err
 
-checkUpdateCartridgeModel = (items, fields, modifier) ->
+checkUpdatePrinterModel = (items, fields, modifier) ->
     err = items.length == 1
     err &= fields[0] == 'name'
     err &= fields[1] == 'descr'
@@ -21,12 +21,12 @@ checkUpdateCartridgeModel = (items, fields, modifier) ->
     err &= modifier["$set"].descr != undefined
     return err
 
-Cartridges.allow
+Printers.allow
     insert: (userId, item) ->
         if userId != null
             user = Meteor.users.findOne({'_id': userId})
             if user != undefined and user.group == 'admin'
-                if checkNewCartridgeModel item
+                if checkNewPrinterModel item
                     now = new Date()
                     item.creationDate = now
                     item.lastChanges = now
@@ -38,7 +38,7 @@ Cartridges.allow
         if userId != null
             user = Meteor.users.findOne({'_id': userId})
             if user != undefined and user.group == 'admin'
-                if checkUpdateCartridgeModel items, fields, modifier
+                if checkUpdatePrinterModel items, fields, modifier
                     now = new Date()
                     fields.push "lastChanges"
                     modifier["$set"].lastChanges = now

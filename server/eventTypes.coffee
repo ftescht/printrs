@@ -1,4 +1,3 @@
-
 EventTypes = new Meteor.Collection "eventTypes"
 
 Meteor.publish "all-eventtypes", ()->

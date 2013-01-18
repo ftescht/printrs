@@ -1,0 +1,25 @@
+<template name="printersList">
+
+{{#if isVisible}}
+<legend>
+    Printers
+    {{#if isAdmin}}
+        <div class="btn-group pull-right">
+            <a href="#addPrinterWindow" class="btn btn-small" data-toggle="modal">Add printer</a>
+        </div>
+    {{/if}}
+</legend>
+
+<ul id="printersList" class="nav nav-tabs nav-stacked">
+    {{#each printers}}
+        <li class="{{printerSelectedClass}}">
+            <a id="{{_id}}" class="printer" href="#" rel="tooltip" title="{{descr}}">
+                <i class="icon-chevron-right"></i>
+                {{name}}
+            </a>
+        </li>
+    {{/each}}
+</ul>
+{{/if}}
+
+</template>
