@@ -47,8 +47,6 @@ Cartridges.allow
             now = new Date()
             fields.push "lastChanges"
             modifier["$set"].lastChanges = now
-            fields.push "owner"
-            modifier["$set"].owner = userId
             return true
         return false
 
