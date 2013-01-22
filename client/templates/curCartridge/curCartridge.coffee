@@ -8,6 +8,10 @@ Template.curCartridge.eventsList = ()->
 Template.curCartridge.isVisible = ()->
     return Template.curCartridge.cartridge() != undefined
 
+Template.curCartridge.canDel = () ->
+    curId = Template.curCartridge.cartridge()._id
+    return Events.find({cartridgeId: curId}).count() == 0
+
 Template.curCartridge.eventName = ()->
     typeId = this.typeId
     type = _.first _.filter EventTypes.find({}).fetch(),  (item)->

@@ -4,6 +4,10 @@ Template.eventTypes.eventTypes = ()->
 Template.eventTypes.colorStyle = ()->
     return  "eventType" + this.id
 
+Template.eventTypes.canDel = () ->
+    curId = this.id + ""
+    return Events.find({typeId: curId}).count() == 0
+
 Template.eventTypes.events
     'click a.removeEventType': () ->
         EventTypes.remove

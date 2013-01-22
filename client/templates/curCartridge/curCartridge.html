@@ -6,11 +6,13 @@
     <div class="btn-group pull-right">
         <a href="#addEventWindow" class="btn btn-small" data-toggle="modal">Add event</a>
         <a href="#" class="editCurCartridge btn btn-small">Edit</a>
+        {{#if canDel}}
         <button class="btn btn-small btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
         <ul class="dropdown-menu">
             <li><a href="#">No</a></li>
             <li><a id="removeCurCartridge" href="#">Yes</a></li>
         </ul>
+        {{/if}}
     </div>
 </legend>
 

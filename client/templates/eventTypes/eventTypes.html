@@ -14,9 +14,10 @@
             <thead>
                 <tr>
                     <th width="15">Id</th>
-                    <th width="300">Name</th>
-                    <th>Color</th>
-                    <th width="85"></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th width="35">Color</th>
+                    <th width="30"></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,15 +25,18 @@
                     <tr>
                         <td>{{id}}</td>
                         <td>{{name}}</td>
+                        <td>{{descr}}</td>
                         <td class="{{colorStyle}}"></td>
                         <td>
                             <div class="btn-group">
                                 <button class="editEventType btn btn-mini">Edit</button>
+                                {{#if canDel}}
                                 <button class="btn btn-danger btn-mini dropdown-toggle" data-toggle="dropdown">Remove</button>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">No</a></li>
                                     <li><a class="removeEventType" href="#">Yes</a></li>
                                 </ul>
+                                {{/if}}
                             </div>
                         </td>
                     </tr>
