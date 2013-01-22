@@ -49,5 +49,7 @@ Cartridges.allow
         if userId != null
             user = Meteor.users.findOne({'_id': userId})
             if user != undefined and user.group == 'admin'
-                return true
+                curId = items[0]._id
+                if Events.find({cartridgeId: curId}).count() == 0
+                    return true
         return false

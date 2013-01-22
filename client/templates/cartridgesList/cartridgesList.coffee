@@ -10,12 +10,7 @@ Template.cartridgesList.isVisible = ()->
     return Template.cartridgesList.cartridges().count() > 0 or Template.cartridgesList.isAdmin()
 
 Template.cartridgesList.stateStyle = ()->
-    switch this.lastState
-        when '1' then return "greenState"
-        when '2' then return "redState"
-        when '3' then return "orangeState"
-        when '4' then return "blueState"
-    return ""
+    return "eventType" + this.lastState
 
 Template.cartridgesList.cartridgeSelectedClass = ()->
     return "active" if this._id == Template.cartridgesList.selectedCartridgeId

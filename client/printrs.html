@@ -16,22 +16,18 @@
     <div id="content" class="container">
         <div class="row">
             <div class="span3">
-                {{> printersList}}
-            </div>
-            <div id="printerBox" class="span9"></div>
-        </div>
-        <div class="row">
-            <div class="span3">
                 {{> cartridgesList}}
             </div>
             <div id="cartridgeBox" class="span9"></div>
         </div>
     </div>
 
-    {{> newPrinter}}
     {{> newCartridge}}
     {{> newEvent}}
-    {{> users}}
     {{> login}}
+
+    {{> users}}
+    {{> eventTypes}}
+    {{> newEventType}}
 
 </body>

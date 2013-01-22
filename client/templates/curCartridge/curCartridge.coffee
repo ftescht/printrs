@@ -15,12 +15,7 @@ Template.curCartridge.eventName = ()->
     return type.name
 
 Template.curCartridge.eventColor = ()->
-    rowClass = ""
-    switch this.typeId
-        when '1' then return "success"
-        when '2' then return "error"
-        when '3' then return "warning"
-        when '4' then return "info"
+    return "eventType" + this.typeId
 
 Template.curCartridge.events
     'click a.editCurCartridge': ()->
@@ -30,8 +25,6 @@ Template.curCartridge.events
         $("#newCartridgeDescr").val Template.curCartridge.cartridge().descr
 
     'click #removeCurCartridge': () ->
-        Events.remove
-            cartridgeId: Template.curCartridge.cartridge()._id
         Cartridges.remove
             _id: Template.curCartridge.cartridge()._id
         Template.cartridgesList.selectedCartridgeId = 0
