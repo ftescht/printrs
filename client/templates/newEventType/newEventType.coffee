@@ -1,27 +1,30 @@
 Meteor.startup ()->
     $('#addEventTypeWindow').on 'hidden', ()->
-        $("#eventTypeId").val("")
-        $("#newEventTypeName").val("")
-        $("#newEventTypeDescr").val("")
-        $("#newEventTypeColor").val("")
+        $('#eventTypeId').val null
+        $('#newEventTypeName').val null
+        $('#newEventTypeDescr').val null
+        $('#newEventTypeColor').val null
+
+Template.newEventType.eventTypes = ()->
+    return EventTypes.find {}, {sort: {id: 1}}
 
 Template.newEventType.events
     'click button.yes': () ->
-        eventTypeName = $("#newEventTypeName").val()
+        eventTypeName = $('#newEventTypeName').val()
         if eventTypeName.length <= 3
-            alertBox "newEventTypeAlertBox", "Name can't be blank"
+            alertBox 'newEventTypeAlertBox', "Name can't be blank"
             return null
 
-        eventTypeColor = $("#newEventTypeColor").val()
+        eventTypeColor = $('#newEventTypeColor').val()
         if eventTypeColor.length < 3
-            alertBox "newEventTypeAlertBox", "Color can't be blank"
+            alertBox 'newEventTypeAlertBox', "Color can't be blank"
             return null
             
-        eventTypeDescr = $("#newEventTypeDescr").val()
+        eventTypeDescr = $('#newEventTypeDescr').val()
 
-        if $("#eventTypeId").val() != ""
+        if $('#eventTypeId').val() != ""
             selector =
-                _id: $("#eventTypeId").val()
+                _id: $('#eventTypeId').val()
             modifier =
                 $set:
                     name: eventTypeName
@@ -33,4 +36,4 @@ Template.newEventType.events
                 name: eventTypeName
                 descr: eventTypeDescr
                 color: eventTypeColor
-        $('#addEventTypeWindow').modal('hide')
+        $('#addEventTypeWindow').modal 'hide'

@@ -4,5 +4,5 @@ Template.user.isLogin = ()->
 Template.user.events
     'click #logoutLink': () ->
         Meteor.logout()
-        $("#eventsPlace").html("")
-        $("#cartridgeBox").html("")
+        $('#eventsPlace').html null
+        $('#cartridgeBox').html null

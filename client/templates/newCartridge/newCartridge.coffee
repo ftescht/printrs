@@ -1,20 +1,20 @@
 Meteor.startup ()->
     $('#addCartridgeWindow').on 'hidden', ()->
-        $("#cartridgeId").val("")
-        $("#newCartridgeName").val("")
-        $("#newCartridgeDescr").val("")
+        $('#cartridgeId').val null
+        $('#newCartridgeName').val null
+        $('#newCartridgeDescr').val null
 
 Template.newCartridge.events
     'click button.yes': () ->
-        cartridgeName = $("#newCartridgeName").val()
+        cartridgeName = $('#newCartridgeName').val()
         if cartridgeName.length <= 3
-            alertBox "newCartridgeAlertBox", "Name can't be blank"
+            alertBox 'newCartridgeAlertBox', "Name can't be blank"
             return null
-        cartridgeDescr = $("#newCartridgeDescr").val()
+        cartridgeDescr = $('#newCartridgeDescr').val()
 
-        if $("#cartridgeId").val() != ""
+        if $('#cartridgeId').val() != ""
             selector =
-                _id: $("#cartridgeId").val()
+                _id: $('#cartridgeId').val()
             modifier =
                 $set:
                     name: cartridgeName
@@ -24,4 +24,4 @@ Template.newCartridge.events
             Cartridges.insert
                 name: cartridgeName
                 descr: cartridgeDescr
-        $('#addCartridgeWindow').modal('hide')
+        $('#addCartridgeWindow').modal 'hide'

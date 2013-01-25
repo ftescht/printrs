@@ -1,7 +1,7 @@
-Events = new Meteor.Collection "events"
+Events = new Meteor.Collection 'events'
 
-Meteor.publish "all-events", ()->
-    user = Meteor.users.findOne({'_id': this.userId})
+Meteor.publish 'all-events', ()->
+    user = Meteor.users.findOne {'_id': this.userId}
     if user != undefined and user.group == 'admin'
         return Events.find()
     return null
@@ -19,23 +19,26 @@ checkUpdateEventModel = (items, fields, modifier) ->
     err &= fields[0] == 'typeId'
     err &= fields[1] == 'date'
     err &= fields[2] == 'comment'
-    err &= Object.keys(modifier["$set"]).length == 3
-    err &= EventTypes.findOne({id: modifier["$set"].typeId}) != null
-    err &= modifier["$set"].date.length == 10
-    err &= modifier["$set"].comment != undefined
+    err &= Object.keys(modifier['$set']).length == 3
+    err &= EventTypes.findOne({id: modifier['$set'].typeId}) != null
+    err &= modifier['$set'].date.length == 10
+    err &= modifier['$set'].comment != undefined
     return err
 
 updateCartridge = (item) ->
-    lastEvent = Events.findOne({'cartridgeId': item.cartridgeId}, {'sort': {'date': -1, 'lastChanges': -1}})
+    lastEvent = Events.findOne {'cartridgeId': item.cartridgeId}, {'sort': {'date': -1, 'lastChanges': -1}}
+
+    lastState = null
     if lastEvent
-        now = new Date()
-        selector =
-            _id: item.cartridgeId
-        modifier =
-            $set:
-                lastState: lastEvent.typeId
-                lastChanges: now
-        Cartridges.update selector, modifier
+        lastState = lastEvent.typeId
+    now = new Date()
+    selector =
+        _id: item.cartridgeId
+    modifier =
+        $set:
+            lastState: lastState
+            lastChanges: now
+    Cartridges.update selector, modifier
 
 query = Events.find()
 handle = query.observe
@@ -49,7 +52,7 @@ handle = query.observe
 Events.allow
     insert: (userId, item) ->
         if userId != null
-            user = Meteor.users.findOne({'_id': userId})
+            user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
                 if checkNewEventModel item
                     now = new Date()
@@ -61,18 +64,18 @@ Events.allow
 
     update: (userId, items, fields, modifier) ->
         if userId != null
-            user = Meteor.users.findOne({'_id': userId})
+            user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
                 if checkUpdateEventModel items, fields, modifier
                     now = new Date()
-                    fields.push "lastChanges"
-                    modifier["$set"].lastChanges = now
+                    fields.push 'lastChanges'
+                    modifier['$set'].lastChanges = now
                     return true
         return false
 
     remove: (userId, items) ->
         if userId != null
-            user = Meteor.users.findOne({'_id': userId})
+            user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
                 return true
         return false

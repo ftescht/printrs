@@ -1,7 +1,7 @@
-EventTypes = new Meteor.Collection "eventTypes"
+EventTypes = new Meteor.Collection 'eventTypes'
 
-Meteor.publish "all-eventtypes", ()->
-    user = Meteor.users.findOne({'_id': this.userId})
+Meteor.publish 'all-eventtypes', ()->
+    user = Meteor.users.findOne {'_id': this.userId}
     if user != undefined and user.group == 'admin'
         return EventTypes.find {}, {'sort': {'id': 1}}
     return null
@@ -18,10 +18,10 @@ checkUpdateEventTypeModel = (items, fields, modifier) ->
     err &= fields[0] == 'name'
     err &= fields[1] == 'descr'
     err &= fields[2] == 'color'
-    err &= Object.keys(modifier["$set"]).length == 3
-    err &= modifier["$set"].name.length > 3
-    err &= modifier["$set"].descr != undefined
-    err &= modifier["$set"].color.length > 3
+    err &= Object.keys(modifier['$set']).length == 3
+    err &= modifier['$set'].name.length > 3
+    err &= modifier['$set'].descr != undefined
+    err &= modifier['$set'].color.length > 3
     return err
 
 EventTypes.allow
@@ -40,22 +40,22 @@ EventTypes.allow
                     item.owner = userId
                     item.id = id
                     return true
-        return true
+        return false
 
     update: (userId, items, fields, modifier) ->
         if userId != null
-            user = Meteor.users.findOne({'_id': userId})
+            user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
                 if checkUpdateEventTypeModel items, fields, modifier
                     now = new Date()
-                    fields.push "lastChanges"
-                    modifier["$set"].lastChanges = now
+                    fields.push 'lastChanges'
+                    modifier['$set'].lastChanges = now
                     return true
         return false
 
     remove: (userId, items) ->
         if userId != null
-            user = Meteor.users.findOne({'_id': userId})
+            user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
                 curId = items[0].id+ ""
                 if Events.find({typeId: curId}).count() == 0
