@@ -12,6 +12,12 @@ Template.curCartridge.canDel = () ->
     curId = Template.curCartridge.cartridge()._id
     return Events.find({cartridgeId: curId}).count() == 0
 
+Template.curCartridge.eventDate = ()->
+    date = new Date (this.date)
+    if isNaN(date.getTime())
+        return "old " + this.date
+    return date.format("dd.mm.yyyy")
+
 Template.curCartridge.eventName = ()->
     typeId = this.typeId
     type = _.first _.filter EventTypes.find({}).fetch(), (item)->
@@ -38,7 +44,11 @@ Template.curCartridge.events
         $('#addEventWindow').modal 'show'
         $('#eventId').val this._id
         $('#newEventTypeId').val this.typeId
-        $('#newEventDate').val this.date
+        date = new Date (this.date)
+        if isNaN(date.getTime())
+            $('#newEventDate').val this.date
+        else
+            $('#newEventDate').val date.format("dd.mm.yyyy")
         $('#newEventComment').val this.comment
 
     'click a.removeEvent': () ->

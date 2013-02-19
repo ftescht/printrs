@@ -29,21 +29,24 @@ Template.newEvent.events
         eventCartridgeId = Template.cartridgesList.selectedCartridgeId
         eventTypeId = 0
         eventTypeId = $('#newEventTypeId').val()
-        eventDate = $('#newEventDate').val()
+        eventDate = null
         eventComment = $('#newEventComment').val()
 
+        dateArr = $('#newEventDate').val().match(/^(\d{1,2}).(\d{1,2}).(\d{4})$/)
+        if dateArr
+            eventDate = new Date (dateArr[2] + "/" + dateArr[1] + "/" + dateArr[3])
         error = "<ul>"
         if Template.cartridgesList.selectedCartridgeId == 0
             error += "<li>Cartridge not selected</li>"
         if eventTypeId == 0
             error += "<li>Event type not selected</li>"
-        if eventDate.length == 0
+        if eventDate == null
             error += "<li>Date can't be blank</li>"
         if error != "<ul>"
             error += "</ul>"
             alertBox 'newEventAlertBox', error
             return null
-
+            
         if $('#eventId').val() != ""
             selector =
                 _id: $('#eventId').val()

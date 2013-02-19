@@ -4,6 +4,6 @@ Accounts.config
     forbidClientAccountCreation: false
 
 Accounts.onCreateUser (options, user) ->
-    if user.username == 'veshnyakov' or user.username == 'gostev'
-        user.group = 'admin'
+    #if user.username == 'admin' or user.username == 'administrator'
+    #    user.group = 'admin'
     return user

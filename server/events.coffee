@@ -10,7 +10,7 @@ checkNewEventModel = (item) ->
     err = Object.keys(item).length == 5
     err &= Cartridges.findOne({_id: item.cartridgeId}) != null
     err &= EventTypes.findOne({id: item.typeId}) != null
-    err &= item.date.length == 10
+    err &= (item.date.length == 24 && (item.date = new Date(item.date))) != null
     err &= item.comment != undefined
     return err
 
@@ -21,7 +21,7 @@ checkUpdateEventModel = (items, fields, modifier) ->
     err &= fields[2] == 'comment'
     err &= Object.keys(modifier['$set']).length == 3
     err &= EventTypes.findOne({id: modifier['$set'].typeId}) != null
-    err &= modifier['$set'].date.length == 10
+    err &= ((modifier['$set'].date.length == 24) && (modifier['$set'].date = new Date(modifier['$set'].date))) != null
     err &= modifier['$set'].comment != undefined
     return err
 
