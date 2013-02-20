@@ -14,8 +14,6 @@ Template.curCartridge.canDel = () ->
 
 Template.curCartridge.eventDate = ()->
     date = new Date (this.date)
-    if isNaN(date.getTime())
-        return "old " + this.date
     return date.format("dd.mm.yyyy")
 
 Template.curCartridge.eventName = ()->
