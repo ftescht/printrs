@@ -1,7 +1,7 @@
 Meteor.startup ()->
     $('#addEventWindow').on 'shown', ()->
         if $('#newEventDate').val() == ""
-            $('#newEventDate').val $.format.date new Date(), "dd.MM.yyyy"
+            $('#newEventDate').val new Date().format("dd.mm.yyyy")
 
         $('#newEventDate').datepicker
             format: "dd.mm.yyyy"
