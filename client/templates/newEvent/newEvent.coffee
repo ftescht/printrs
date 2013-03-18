@@ -16,6 +16,7 @@ Meteor.startup ()->
 
     $('#addEventWindow').on 'hidden', ()->
         $('#eventId').val null
+        $('#placeId').val null
         $('#newEventPlace').val null
         $('#newEventComment').val null
         $('#newEventDate').val null
@@ -24,6 +25,9 @@ Meteor.startup ()->
 
 Template.newEvent.eventTypes = ()->
     return EventTypes.find {}, {sort: {id: 1}}
+
+Template.newEvent.places = ()->
+    return Places.find {}, {sort: {id: 1}}
 
 Template.newEvent.events
     'keydown #addEventWindow input': (e) ->
@@ -36,6 +40,8 @@ addEvent = ()->
     eventCartridgeId = Template.cartridgesList.selectedCartridgeId
     eventTypeId = 0
     eventTypeId = $('#newEventTypeId').val()
+    placeId = 0
+    placeId = $('#newPlaceId').val()
     eventDate = null
     eventComment = $('#newEventComment').val()
     eventPlace = $('#newEventPlace').val()
@@ -48,6 +54,8 @@ addEvent = ()->
         error += "<li>Cartridge not selected</li>"
     if eventTypeId == 0
         error += "<li>Event type not selected</li>"
+    if placeId == 0
+        error += "<li>Place not selected</li>"
     if eventDate == null
         error += "<li>Date can't be blank</li>"
     if error != "<ul>"
@@ -61,6 +69,7 @@ addEvent = ()->
         modifier =
             $set:
                 typeId: eventTypeId
+                placeId: placeId
                 date: eventDate
                 place: eventPlace
                 comment: eventComment
@@ -69,6 +78,7 @@ addEvent = ()->
         Events.insert
             cartridgeId: eventCartridgeId
             typeId: eventTypeId
+            placeId: placeId
             date: eventDate
             place: eventPlace
             comment: eventComment

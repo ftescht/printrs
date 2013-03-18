@@ -7,9 +7,10 @@ Meteor.publish 'all-events', ()->
     return null
 
 checkNewEventModel = (item) ->
-    err = Object.keys(item).length == 6
+    err = Object.keys(item).length == 7
     err &= Cartridges.findOne({_id: item.cartridgeId}) != null
     err &= EventTypes.findOne({id: (item.typeId)|0}) != undefined
+    err &= Places.findOne({id: (item.placeId)|0}) != undefined
     err &= (item.date.length == 24 && (item.date = new Date(item.date))) != null
     err &= item.comment != undefined
     err &= item.place != undefined
@@ -19,11 +20,13 @@ checkUpdateEventModel = (items, fields, modifier) ->
     err = true
     #err = items.length == 1
     err &= fields[0] == 'typeId'
-    err &= fields[1] == 'date'
-    err &= fields[2] == 'place'
-    err &= fields[3] == 'comment'
-    err &= Object.keys(modifier['$set']).length == 4
+    err &= fields[1] == 'placeId'
+    err &= fields[2] == 'date'
+    err &= fields[3] == 'place'
+    err &= fields[4] == 'comment'
+    err &= Object.keys(modifier['$set']).length == 5
     err &= EventTypes.findOne({id: (modifier['$set'].typeId)|0}) != undefined
+    err &= Places.findOne({id: (modifier['$set'].placeId)|0}) != undefined
     err &= ((modifier['$set'].date.length == 24) && (modifier['$set'].date = new Date(modifier['$set'].date))) != null
     err &= modifier['$set'].comment != undefined
     err &= modifier['$set'].place != undefined

@@ -7,6 +7,9 @@ Meteor.subscribe 'all-eventtypes', ()->
     eTypes.forEach (item) ->
         addClassColor item.id, item.color
 
+Places = new Meteor.Collection 'places'
+Meteor.subscribe 'all-places'
+
 Cartridges = new Meteor.Collection 'cartridges'
 Meteor.subscribe 'all-cartridges'
 

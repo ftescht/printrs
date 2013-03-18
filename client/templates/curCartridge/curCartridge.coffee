@@ -42,6 +42,7 @@ Template.curCartridge.events
         $('#addEventWindow').modal 'show'
         $('#eventId').val this._id
         $('#newEventTypeId').val this.typeId
+        $('#newPlaceId').val this.placeId
         date = new Date (this.date)
         if isNaN(date.getTime())
             $('#newEventDate').val this.date
