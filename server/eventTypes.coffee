@@ -14,7 +14,7 @@ checkNewEventTypeModel = (item) ->
     return err
 
 checkUpdateEventTypeModel = (items, fields, modifier) ->
-    err = items.length == 1
+    err = true
     err &= fields[0] == 'name'
     err &= fields[1] == 'descr'
     err &= fields[2] == 'color'
@@ -53,11 +53,10 @@ EventTypes.allow
                     return true
         return false
 
-    remove: (userId, items) ->
+    remove: (userId, item) ->
         if userId != null
             user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
-                curId = items[0].id+ ""
-                if Events.find({typeId: curId}).count() == 0
+                if Events.find({typeId: item.id}).count() == 0
                     return true
         return false

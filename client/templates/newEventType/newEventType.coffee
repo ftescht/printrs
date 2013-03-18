@@ -9,31 +9,37 @@ Template.newEventType.eventTypes = ()->
     return EventTypes.find {}, {sort: {id: 1}}
 
 Template.newEventType.events
-    'click button.yes': () ->
-        eventTypeName = $('#newEventTypeName').val()
-        if eventTypeName.length <= 3
-            alertBox 'newEventTypeAlertBox', "Name can't be blank"
-            return null
+    'keydown #addEventTypeWindow input': (e) ->
+        if e.which == 13
+            addEventType()
+    'click #addEventTypeWindow button.yes': () ->
+        addEventType()
+        
+addEventType = () ->
+    eventTypeName = $('#newEventTypeName').val()
+    if eventTypeName.length <= 3
+        alertBox 'newEventTypeAlertBox', "Name can't be blank"
+        return null
 
-        eventTypeColor = $('#newEventTypeColor').val()
-        if eventTypeColor.length < 3
-            alertBox 'newEventTypeAlertBox', "Color can't be blank"
-            return null
-            
-        eventTypeDescr = $('#newEventTypeDescr').val()
+    eventTypeColor = $('#newEventTypeColor').val()
+    if eventTypeColor.length < 3
+        alertBox 'newEventTypeAlertBox', "Color can't be blank"
+        return null
+        
+    eventTypeDescr = $('#newEventTypeDescr').val()
 
-        if $('#eventTypeId').val() != ""
-            selector =
-                _id: $('#eventTypeId').val()
-            modifier =
-                $set:
-                    name: eventTypeName
-                    descr: eventTypeDescr
-                    color: eventTypeColor
-            EventTypes.update selector, modifier
-        else
-            EventTypes.insert
+    if $('#eventTypeId').val() != ""
+        selector =
+            _id: $('#eventTypeId').val()
+        modifier =
+            $set:
                 name: eventTypeName
                 descr: eventTypeDescr
                 color: eventTypeColor
-        $('#addEventTypeWindow').modal 'hide'
+        EventTypes.update selector, modifier
+    else
+        EventTypes.insert
+            name: eventTypeName
+            descr: eventTypeDescr
+            color: eventTypeColor
+    $('#addEventTypeWindow').modal 'hide'

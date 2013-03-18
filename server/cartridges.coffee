@@ -13,7 +13,7 @@ checkNewCartridgeModel = (item) ->
     return err
 
 checkUpdateCartridgeModel = (items, fields, modifier) ->
-    err = items.length == 1
+    err = true
     err &= fields[0] == 'name'
     err &= fields[1] == 'descr'
     err &= Object.keys(modifier["$set"]).length == 2
@@ -45,11 +45,10 @@ Cartridges.allow
                     return true
         return false
 
-    remove: (userId, items) ->
+    remove: (userId, item) ->
         if userId != null
             user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
-                curId = items[0]._id
-                if Events.find({cartridgeId: curId}).count() == 0
+                if Events.find({cartridgeId: item._id}).count() == 0
                     return true
         return false

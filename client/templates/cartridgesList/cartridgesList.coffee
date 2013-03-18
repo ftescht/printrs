@@ -4,7 +4,7 @@ Template.cartridgesList.cartridges = ()->
     return Cartridges.find {}, {sort: {name: 1}}
 
 Template.cartridgesList.isAdmin = ()->
-    return Meteor.user() != null and Meteor.user().group == 'admin'
+    return Meteor.user() != undefined and Meteor.user().group == 'admin'
 
 Template.cartridgesList.isVisible = ()->
     return Template.cartridgesList.cartridges().count() > 0 or Template.cartridgesList.isAdmin()

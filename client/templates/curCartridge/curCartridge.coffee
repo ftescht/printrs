@@ -47,6 +47,7 @@ Template.curCartridge.events
             $('#newEventDate').val this.date
         else
             $('#newEventDate').val date.format("dd.mm.yyyy")
+        $('#newEventPlace').val this.place
         $('#newEventComment').val this.comment
 
     'click a.removeEvent': () ->

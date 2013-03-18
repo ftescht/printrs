@@ -5,6 +5,7 @@
 
 insecure
 preserve-inputs
+jquery
 coffeescript
 bootstrap
 stylus
