@@ -17,7 +17,6 @@ Meteor.startup ()->
     $('#addEventWindow').on 'hidden', ()->
         $('#eventId').val null
         $('#placeId').val null
-        $('#newEventPlace').val null
         $('#newEventComment').val null
         $('#newEventDate').val null
         if $('div.datepicker.dropdown-menu:visible').length > 0
@@ -44,7 +43,6 @@ addEvent = ()->
     placeId = $('#newPlaceId').val()
     eventDate = null
     eventComment = $('#newEventComment').val()
-    eventPlace = $('#newEventPlace').val()
 
     dateArr = $('#newEventDate').val().match(/^(\d{1,2}).(\d{1,2}).(\d{4})$/)
     if dateArr
@@ -71,7 +69,6 @@ addEvent = ()->
                 typeId: eventTypeId
                 placeId: placeId
                 date: eventDate
-                place: eventPlace
                 comment: eventComment
         Events.update selector, modifier
     else
@@ -80,6 +77,5 @@ addEvent = ()->
             typeId: eventTypeId
             placeId: placeId
             date: eventDate
-            place: eventPlace
             comment: eventComment
     $('#addEventWindow').modal 'hide'

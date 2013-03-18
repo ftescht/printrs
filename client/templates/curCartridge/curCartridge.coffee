@@ -20,7 +20,17 @@ Template.curCartridge.eventName = ()->
     typeId = this.typeId
     type = _.first _.filter EventTypes.find({}).fetch(), (item)->
         item.id - typeId == 0
-    return type.name
+    if type
+        return type.name
+    return ""
+
+Template.curCartridge.placeName = ()->
+    placeId = this.placeId
+    palce = _.first _.filter Places.find({}).fetch(), (item)->
+        item.id - placeId == 0
+    if palce
+        return palce.name
+    return ""
 
 Template.curCartridge.eventColor = ()->
     return "eventType" + this.typeId
@@ -48,7 +58,6 @@ Template.curCartridge.events
             $('#newEventDate').val this.date
         else
             $('#newEventDate').val date.format("dd.mm.yyyy")
-        $('#newEventPlace').val this.place
         $('#newEventComment').val this.comment
 
     'click a.removeEvent': () ->
