@@ -28,17 +28,11 @@ Places.allow
         if userId != null
             user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
-                id = 1
-                if (Places.find().count() > 0)
-                    maxET = Places.findOne {}, {'sort': {'id': -1}}
-                    if maxET != null or maxET != undefined
-                        id = maxET.id + 1
                 if checkNewPlaceModel item
                     now = new Date()
                     item.creationDate = now
                     item.lastChanges = now
                     item.owner = userId
-                    item.id = id
                     console.log item
                     return true
         return false

@@ -5,7 +5,7 @@ EventTypes = new Meteor.Collection 'eventTypes'
 Meteor.subscribe 'all-eventtypes', ()->
     eTypes = EventTypes.find {}
     eTypes.forEach (item) ->
-        addClassColor item.id, item.color
+        addClassColor item._id, item.color
 
 Places = new Meteor.Collection 'places'
 Meteor.subscribe 'all-places'

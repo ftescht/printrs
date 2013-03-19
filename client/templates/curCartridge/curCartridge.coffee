@@ -24,10 +24,7 @@ Template.curCartridge.eventName = ()->
     return ""
 
 Template.curCartridge.placeName = ()->
-    placeId = this.placeId
-    palce = _.first _.filter Places.find({}).fetch(), (item)->
-        item._id == placeId
-    return palce.name if palce
+    return palce.name if palce = Places.findOne({ _id: this.placeId })
     return ""
 
 Template.curCartridge.eventColor = ()->

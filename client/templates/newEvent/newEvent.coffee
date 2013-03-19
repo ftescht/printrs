@@ -23,7 +23,7 @@ Meteor.startup ()->
             $('#newEventDate').datepicker 'hide'
 
 Template.newEvent.eventTypes = ()->
-    return EventTypes.find {}, {sort: {id: 1}}
+    return EventTypes.find()
 
 Template.newEvent.places = ()->
     return Places.find()

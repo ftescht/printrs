@@ -3,7 +3,7 @@ EventTypes = new Meteor.Collection 'eventTypes'
 Meteor.publish 'all-eventtypes', ()->
     user = Meteor.users.findOne {'_id': this.userId}
     if user != undefined and user.group == 'admin'
-        return EventTypes.find {}, {'sort': {'id': 1}}
+        return EventTypes.find()
     return null
 
 checkNewEventTypeModel = (item) ->
@@ -29,16 +29,11 @@ EventTypes.allow
         if userId != null
             user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
-                id = 1
-                maxET = EventTypes.findOne {}, {'sort': {'id': -1}}
-                if maxET != null or maxET != undefined
-                    id = maxET.id + 1
                 if checkNewEventTypeModel item
                     now = new Date()
                     item.creationDate = now
                     item.lastChanges = now
                     item.owner = userId
-                    item.id = id
                     return true
         return false
 
