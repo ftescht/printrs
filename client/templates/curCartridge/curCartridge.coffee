@@ -17,10 +17,7 @@ Template.curCartridge.eventDate = ()->
     return date.format("dd.mm.yyyy")
 
 Template.curCartridge.eventName = ()->
-    typeId = this.typeId
-    type = _.first _.filter EventTypes.find({}).fetch(), (item)->
-        item.id - typeId == 0
-    return type.name if type
+    return type.name if type = EventTypes.findOne({ _id: this.typeId })
     return ""
 
 Template.curCartridge.placeName = ()->
