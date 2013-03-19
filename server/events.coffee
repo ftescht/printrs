@@ -17,7 +17,6 @@ checkNewEventModel = (item) ->
 
 checkUpdateEventModel = (items, fields, modifier) ->
     err = true
-    #err = items.length == 1
     err &= fields[0] == 'typeId'
     err &= fields[1] == 'placeId'
     err &= fields[2] == 'date'

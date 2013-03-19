@@ -20,16 +20,14 @@ Template.curCartridge.eventName = ()->
     typeId = this.typeId
     type = _.first _.filter EventTypes.find({}).fetch(), (item)->
         item.id - typeId == 0
-    if type
-        return type.name
+    return type.name if type
     return ""
 
 Template.curCartridge.placeName = ()->
     placeId = this.placeId
     palce = _.first _.filter Places.find({}).fetch(), (item)->
-        item.id - placeId == 0
-    if palce
-        return palce.name
+        item._id == placeId
+    return palce.name if palce
     return ""
 
 Template.curCartridge.eventColor = ()->

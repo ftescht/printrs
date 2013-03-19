@@ -2,7 +2,7 @@ Template.places.places = ()->
     return Places.find {}
 
 Template.places.canDel = () ->
-    curId = this.id + ""
+    curId = this._id
     return Events.find({placeId: curId}).count() == 0
 
 Template.places.events
