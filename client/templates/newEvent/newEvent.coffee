@@ -26,7 +26,7 @@ Template.newEvent.eventTypes = ()->
     return EventTypes.find {}, {sort: {id: 1}}
 
 Template.newEvent.places = ()->
-    return Places.find {}, {sort: {id: 1}}
+    return Places.find()
 
 Template.newEvent.events
     'keydown #addEventWindow input': (e) ->

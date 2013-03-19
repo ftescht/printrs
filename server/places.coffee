@@ -3,7 +3,7 @@ Places = new Meteor.Collection 'places'
 Meteor.publish 'all-places', ()->
     user = Meteor.users.findOne {'_id': this.userId}
     if user != undefined and user.group == 'admin'
-        return Places.find {}, {'sort': {'id': 1}}
+        return Places.find()
     return null
 
 checkNewPlaceModel = (item) ->
