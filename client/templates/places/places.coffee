@@ -15,3 +15,7 @@ Template.places.events
         $('#placeId').val this._id
         $('#newPlaceName').val this.name
         $('#newPlaceDescr').val this.descr
+
+    'click button.showPlace': ()->
+        $('#placeId').val this._id
+        $('#showPlaceWindow').modal 'show'

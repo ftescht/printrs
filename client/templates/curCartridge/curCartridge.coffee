@@ -28,6 +28,10 @@ Template.curCartridge.eventColor = ()->
     return "eventType" + this.typeId
 
 Template.curCartridge.events
+    'click .place a': ()->
+        $('#placeId').val this.placeId
+        $('#showPlaceWindow').modal 'show'
+
     'click a.editCurCartridge': ()->
         $('#addCartridgeWindow').modal 'show'
         $('#cartridgeId').val Template.curCartridge.cartridge()._id

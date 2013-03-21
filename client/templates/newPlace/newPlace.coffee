@@ -4,9 +4,6 @@ Meteor.startup ()->
         $('#newPlaceName').val null
         $('#newPlaceDescr').val null
 
-Template.newPlace.places = ()->
-    return Places.find {}, {sort: {id: 1}}
-
 Template.newPlace.events
     'keydown #addPlaceWindow input': (e) ->
         if e.which == 13
