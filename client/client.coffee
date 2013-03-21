@@ -23,4 +23,19 @@ alertBox = (id, text) ->
 addClassColor = (id, color) ->
     style = $('<style>.eventType'+id+' { background: '+color+' !important; }</style>')
     $('html > head').append style
+    
 
+Meteor.Router.add
+    '/'           : 'cartridgesPage'
+    '/users'      : 'usersPage'
+    '/eventTypes' : 'eventTypesPage'
+    '/places'     : 'placesPage'
+
+Meteor.Router.filters
+    'checkLoggedIn': (page)->
+        if Meteor.user()
+            return page
+        else
+            return 'signin'
+
+Meteor.Router.filter('checkLoggedIn');

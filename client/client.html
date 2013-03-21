@@ -1,0 +1,46 @@
+<head>
+    <title>Cartridges</title>
+</head>
+
+<body>
+    
+    {{> newCartridge}}
+    {{> newPlace}}
+    {{> place}}
+    {{> newEvent}}
+    {{> newEventType}}
+
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                {{> menu}}
+                {{> user}}
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="container">
+        {{renderPage}}
+    </div>
+
+</body>
+
+<template name="cartridgesPage">
+    {{> cartridgesPageT}}
+</template>
+
+<template name="usersPage">
+    {{> usersPageT}}
+</template>
+
+<template name="eventTypesPage">
+    {{> eventTypesPageT}}
+</template>
+
+<template name="placesPage">
+    {{> placesPageT}}
+</template>
+
+<template name="signin">
+    {{> loginPageT}}
+</template>

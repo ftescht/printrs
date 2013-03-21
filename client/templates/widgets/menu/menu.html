@@ -1,0 +1,23 @@
+<template name="menu">
+
+<ul class="nav">
+    {{#if isLogin}}
+        {{#if isAdmin}}
+            <li>
+                <a href="/" data-toggle="modal">Cartridges</a>
+            </li>
+            <li>
+                <a href="/places" data-toggle="modal">Places</a>
+            </li>
+            <li>
+                <a href="/users" data-toggle="modal">Users</a>
+            </li>
+            <li>
+                <a href="/eventTypes" data-toggle="modal">Event types</a>
+            </li>
+        {{/if}}
+    {{else}}
+    {{/if}}
+</ul>
+
+</template>

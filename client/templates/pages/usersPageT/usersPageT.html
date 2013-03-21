@@ -1,0 +1,24 @@
+<template name="usersPageT">
+
+    <div class="row">
+
+        <div class="span3">
+            <legend>
+                Users
+            </legend>
+            <ul id="usersList" class="clList nav nav-tabs nav-stacked">
+                {{#each users}}
+                <li class="{{userSelectedClass}}">
+                    <a id="{{_id}}" class="user" href="#" rel="tooltip" title="{{group}}">
+                        <i class="icon-chevron-right"></i>
+                        {{username}}
+                    </a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <div id="userBox" class="span9"></div>
+    </div>
+
+</template>

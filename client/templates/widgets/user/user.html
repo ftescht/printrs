@@ -1,0 +1,15 @@
+<template name="user">
+
+<ul class="nav pull-right">
+    {{#if isLogin}}
+        <li>
+            <a id="curUserLink" href="#" >{{currentUser.username}}</a>
+        </li>
+        <li>
+            <a id="logoutLink" href="#" >Logout</a>
+        </li>
+    {{else}}
+    {{/if}}
+</ul>
+
+</template>

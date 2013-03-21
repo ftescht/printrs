@@ -45,6 +45,7 @@ EventTypes.allow
                     now = new Date()
                     fields.push 'lastChanges'
                     modifier['$set'].lastChanges = now
+                    modifier['$set'].lastEditor = userId
                     return true
         return false
 

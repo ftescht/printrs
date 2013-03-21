@@ -10,3 +10,4 @@ coffeescript
 bootstrap
 stylus
 accounts-password
+router

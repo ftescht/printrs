@@ -23,8 +23,6 @@ checkUpdatePlaceModel = (items, fields, modifier) ->
 
 Places.allow
     insert: (userId, item) ->
-        console.log "start insert"
-        console.log item
         if userId != null
             user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
@@ -33,7 +31,6 @@ Places.allow
                     item.creationDate = now
                     item.lastChanges = now
                     item.owner = userId
-                    console.log item
                     return true
         return false
 
@@ -45,6 +42,7 @@ Places.allow
                     now = new Date()
                     fields.push 'lastChanges'
                     modifier['$set'].lastChanges = now
+                    modifier['$set'].lastEditor = userId
                     return true
         return false
 

@@ -19,11 +19,12 @@ Meteor.users.allow
                 return true
         return false
 
-    remove: (userId, items) ->
+    remove: (userId, removeItem) ->
         if userId
             user = Meteor.users.findOne {'_id': userId}
             if user != undefined and user.group == 'admin'
-                if userId == items[0]._id or items[0].group == 'admin'
+                if userId == removeItem._id or removeItem.group == 'admin'
+                    console.log "can't remove admin"
                     return false
                 return true
         return false

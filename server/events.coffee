@@ -28,29 +28,45 @@ checkUpdateEventModel = (items, fields, modifier) ->
     err &= modifier['$set'].comment != undefined
     return err
 
-updateCartridge = (item) ->
-    lastEvent = Events.findOne {'cartridgeId': item.cartridgeId}, {'sort': {'date': -1, 'lastChanges': -1}}
-
-    lastState = null
-    if lastEvent
-        lastState = lastEvent.typeId
-    now = new Date()
-    selector =
-        _id: item.cartridgeId
-    modifier =
-        $set:
-            lastState: lastState
-            lastChanges: now
-    Cartridges.update selector, modifier
-
-query = Events.find()
-handle = query.observe
-    'added': (doc)->
-        updateCartridge(doc)
-    'changed': (doc)->
-        updateCartridge(doc)
-    'removed': (doc)->
-        updateCartridge(doc)
+#updateCartridge = (item) ->
+#    lastEvent = Events.findOne {'cartridgeId': item.cartridgeId}, {'sort': {'date': -1, 'lastChanges': -1}}
+#
+#    lastState = null
+#    if lastEvent
+#        lastState = lastEvent.typeId
+#    selector =
+#        _id: item.cartridgeId
+#    modifier =
+#        $set:
+#            lastState: lastState
+#            lastChanges: new Date()
+#    Cartridges.update selector, modifier
+#
+#updatePlace = (item) ->
+#    lastEvent = Events.findOne {'placeId': item.placeId}, {'sort': {'date': -1, 'lastChanges': -1}}
+#
+#    lastState = null
+#    if lastEvent
+#        lastState = lastEvent.typeId
+#    selector =
+#        _id: item.placeId
+#    modifier =
+#        $set:
+#            lastState: lastState
+#            lastChanges: new Date()
+#    Places.update selector, modifier
+#
+#query = Events.find()
+#handle = query.observe
+#    'changed': (doc)->
+#        updateCartridge(doc)
+#        updatePlace(doc)
+#    'added': (doc)->
+#        updateCartridge(doc)
+#        #updatePlace(doc)
+#    'removed': (doc)->
+#        updateCartridge(doc)
+#        updatePlace(doc)
 
 Events.allow
     insert: (userId, item) ->
@@ -62,6 +78,7 @@ Events.allow
                     item.creationDate = now
                     item.lastChanges = now
                     item.owner = userId
+                    item.lastEditor = userId
                     return true
         return false
 
@@ -73,6 +90,7 @@ Events.allow
                     now = new Date()
                     fields.push 'lastChanges'
                     modifier['$set'].lastChanges = now
+                    modifier['$set'].lastEditor = userId
                     return true
         return false
 
