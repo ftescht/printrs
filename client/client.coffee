@@ -31,6 +31,7 @@ Meteor.Router.add
     '/eventTypes' : 'eventTypesPage'
     '/places'     : 'placesPage'
 
+
 Meteor.Router.filters
     'checkLoggedIn': (page)->
         if Meteor.user()

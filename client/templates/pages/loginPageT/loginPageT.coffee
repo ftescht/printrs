@@ -1,14 +1,19 @@
 Template.loginPageT.events
-    'click #loginBtn': () ->
-        login = $('#loginLogin').val()
-        pass = $('#loginPassword').val()
-        Meteor.loginWithPassword {username: login}, pass, (data) ->
-            if data != undefined
-                alertBox 'loginAlertBox', data.reason
+    'keydown #login_form input': (e)->
+        loginFromForm() if e.which == 13
+    'click #loginBtn': ()->
+        loginFromForm()
+    'click #registerBtn': ()->
+        registerFromForm()
 
-    'click #registerBtn': () ->
-        login = $('#loginLogin').val()
-        pass = $('#loginPassword').val()
-        Accounts.createUser {username: login, password: pass}, (data) ->
-            if data != undefined
-                alertBox 'loginAlertBox', data.reason
+loginFromForm = ()->
+    login = $('#loginLogin').val()
+    pass = $('#loginPassword').val()
+    Meteor.loginWithPassword {username: login}, pass, (data) ->
+        alertBox 'loginAlertBox', data.reason if data != undefined
+
+registerFromForm = ()->
+    login = $('#loginLogin').val()
+    pass = $('#loginPassword').val()
+    Accounts.createUser {username: login, password: pass}, (data) ->
+        alertBox 'loginAlertBox', data.reason if data != undefined

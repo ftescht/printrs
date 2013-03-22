@@ -1,52 +1,52 @@
 <template name="curUser">
 
     {{#if isVisible}}
-    <legend>
-        {{user.username}}
-        <div class="btn-group pull-right">
-            {{#if canDel}}
-            <button class="btn btn-small btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
-            <ul class="dropdown-menu">
-                <li><a href="#">No</a></li>
-                <li><a id="removeCurUser" href="#">Yes</a></li>
-            </ul>
-            {{/if}}
-        </div>
-    </legend>
-
-    <table class="table table-bordered table-hover" width="100%">
-        <thead>
-        <tr>
-            <th width="60">Date</th>
-            <th width="140">Cartridge</th>
-            <th width="140">Place</th>
-            <th width="140">Event</th>
-            <th>Comment</th>
-            <th width="80"></th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each eventsList}}
-        <tr class="{{eventColor}}">
-            <td>{{eventDate}}</td>
-            <td>{{cartridgeName}}</td>
-            <td>{{placeName}}</td>
-            <td>{{eventName}}</td>
-            <td>{{comment}}</td>
-            <td>
-                <div class="btn-group">
-                    <button class="editEvent btn btn-mini">Edit</button>
-                    <button class="btn btn-danger btn-mini dropdown-toggle" data-toggle="dropdown">Remove</button>
+        <legend>
+            {{user.username}}
+            <div class="btn-group pull-right">
+                {{#if canDel}}
+                    <button class="btn btn-small btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
                     <ul class="dropdown-menu">
                         <li><a href="#">No</a></li>
-                        <li><a class="removeEvent">Yes</a></li>
+                        <li><a id="removeCurUser" href="#">Yes</a></li>
                     </ul>
-                </div>
-            </td>
-        </tr>
-        {{/each}}
-        </tbody>
-    </table>
+                {{/if}}
+            </div>
+        </legend>
+
+        <table class="table table-bordered table-hover" width="100%">
+            <thead>
+            <tr>
+                <th width="60">Date</th>
+                <th width="140">Cartridge</th>
+                <th width="140">Place</th>
+                <th width="140">Event</th>
+                <th>Comment</th>
+                <th width="80"></th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each eventsList}}
+                    <tr class="{{eventColor}}">
+                        <td>{{eventDate}}</td>
+                        <td>{{cartridgeName}}</td>
+                        <td>{{placeName}}</td>
+                        <td>{{eventName}}</td>
+                        <td>{{comment}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="editEvent btn btn-mini">Edit</button>
+                                <button class="btn btn-danger btn-mini dropdown-toggle" data-toggle="dropdown">Remove</button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">No</a></li>
+                                    <li><a class="removeEvent">Yes</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
     {{/if}}
 
 </template>

@@ -1,27 +1,29 @@
 <template name="placesPageT">
 
-    <div class="row">
+    <div id="content" class="container">
+        <div class="row">
 
-        <div class="span3">
-            <legend>
-                Places
-                <div class="btn-group pull-right">
-                    <a href="#addPlaceWindow" class="btn btn-small" data-toggle="modal">Add Place</a>
-                </div>
-            </legend>
-            <ul id="placesList" class="clList nav nav-tabs nav-stacked">
-                {{#each places}}
-                <li class="{{placeSelectedClass}}">
-                    <a id="{{_id}}" class="place {{stateStyle}}" href="#" rel="tooltip" title="{{descr}}">
-                        <i class="icon-chevron-right"></i>
-                        {{name}}
-                    </a>
-                </li>
-                {{/each}}
-            </ul>
+            <div class="span3">
+                <legend>
+                    Places
+                    <div class="btn-group pull-right">
+                        <button id="addPlace" class="btn btn-small" data-toggle="modal">Add Place</button>
+                    </div>
+                </legend>
+                <ul id="placesList" class="clList nav nav-tabs nav-stacked">
+                    {{#each places}}
+                    <li class="{{placeSelectedClass}}">
+                        <a id="{{_id}}" class="place {{stateStyle}}" href="#" rel="tooltip" title="{{descr}}">
+                            <i class="icon-chevron-right"></i>
+                            {{name}}
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+
+            <div id="placeBox" class="span9"></div>
         </div>
-
-        <div id="placeBox" class="span9"></div>
     </div>
 
 </template>

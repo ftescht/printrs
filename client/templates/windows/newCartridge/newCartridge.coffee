@@ -1,28 +1,32 @@
 Template.newCartridge.rendered = ()->
-    $('#addCartridgeWindow').on 'hide', ()->
-        $('#addCartridgeWindow_id').val null
-        $('#addCartridgeWindow_name').val null
-        $('#addCartridgeWindow_descr').val null
+  $('#addCartridgeWindow').modal 'show'
+
+  $('#addCartridgeWindow').on 'shown', ()->
+    $('#addCartridgeWindow_name').val Template.newCartridge.cartridgeName if Template.newCartridge.cartridgeName
+    $('#addCartridgeWindow_descr').val Template.newCartridge.cartridgeDescr if Template.newCartridge.cartridgeDescr
+
+Template.newCartridge.cartridgeId = null
+Template.newCartridge.cartridgeName = null
+Template.newCartridge.cartridgeDescr = null
 
 Template.newCartridge.events
     'keydown #addCartridgeWindow input': (e) ->
-        if e.which == 13
-            addCartridge()
+        addCartridge()  if e.which == 13
     'click #addCartridgeWindow button.yes': () ->
-        console.log 123;
         addCartridge()
 
 addCartridge = ()->
+    cartridgeId = Template.newCartridge.cartridgeId if Template.newCartridge.cartridgeId
     cartridgeName = $('#addCartridgeWindow_name').val()
     cartridgeDescr = $('#addCartridgeWindow_descr').val()
-    
+
     if cartridgeName.length <= 3
         alertBox 'newCartridgeAlertBox', "Name can't be blank"
         return null
 
-    if $('#addCartridgeWindow_id').val() != ""
+    if cartridgeId
         selector =
-            _id: $('#addCartridgeWindow_id').val()
+            _id: cartridgeId
         modifier =
             $set:
                 name: cartridgeName

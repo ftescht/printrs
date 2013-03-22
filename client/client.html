@@ -1,46 +1,15 @@
 <head>
-    <title>Cartridges</title>
+    <title>Printers</title>
 </head>
 
 <body>
-    
-    {{> newCartridge}}
-    {{> newPlace}}
-    {{> place}}
-    {{> newEvent}}
-    {{> newEventType}}
-
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                {{> menu}}
-                {{> user}}
-            </div>
-        </div>
-    </div>
-
-    <div id="content" class="container">
-        {{renderPage}}
-    </div>
-
+    <div id="windowBox"></div>
+    {{> menu}}
+    {{renderPage}}
 </body>
 
-<template name="cartridgesPage">
-    {{> cartridgesPageT}}
-</template>
-
-<template name="usersPage">
-    {{> usersPageT}}
-</template>
-
-<template name="eventTypesPage">
-    {{> eventTypesPageT}}
-</template>
-
-<template name="placesPage">
-    {{> placesPageT}}
-</template>
-
-<template name="signin">
-    {{> loginPageT}}
-</template>
+<template name="cartridgesPage">{{> cartridgesPageT}}</template>
+<template name="usersPage">{{> usersPageT}}</template>
+<template name="eventTypesPage">{{> eventTypesPageT}}</template>
+<template name="placesPage">{{> placesPageT}}</template>
+<template name="signin">{{> loginPageT}}</template>
