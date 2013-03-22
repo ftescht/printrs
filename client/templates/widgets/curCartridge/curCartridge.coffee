@@ -37,7 +37,7 @@ Template.curCartridge.events
     $('#windowBox').html Meteor.render ()-> Template.place()
     return false
 
-  'click button.editCurCartridge': ()->
+  'click #editCartridge': ()->
     if Template.curCartridge.cartridge()
       Template.newCartridge.cartridgeId = Template.cartridgesPageT.selectedCartridgeId
       Template.newCartridge.cartridgeName = Template.curCartridge.cartridge().name
@@ -50,7 +50,7 @@ Template.curCartridge.events
         _id: Template.cartridgesPageT.selectedCartridgeId
       $("#cartridgeBox").html null
 
-  'click button.addEvent': ()->
+  'click #addEvent': ()->
     if Template.curCartridge.cartridge()
       Template.newEvent.eventId = null
       Template.newEvent.cartridgeId = Template.cartridgesPageT.selectedCartridgeId

@@ -32,18 +32,28 @@ Template.curPlace.eventColor = ()->
   return "eventType" + this.typeId
 
 Template.curPlace.events
-  'click #editCurPlace': ()->
+  'click #editPlace': ()->
     if Template.curPlace.place()
       Template.newPlace.placeId = Template.placesPageT.selectedPlaceId
       Template.newPlace.placeName = Template.curPlace.place().name
       Template.newPlace.placeDescr = Template.curPlace.place().desc
       $('#windowBox').html Meteor.render ()-> Template.newPlace()
 
-  'click #removeCurPlace': () ->
+  'click #removePlace': () ->
     if Template.curPlace.place()
       Places.remove
         _id: Template.placesPageT.selectedPlaceId
       $("#placeBox").html null
+
+  'click #addEvent': ()->
+    if Template.curPlace.place()
+      Template.newEvent.eventId = null
+      Template.newEvent.cartridgeId = null
+      Template.newEvent.typeId = null
+      Template.newEvent.placeId = Template.placesPageT.selectedPlaceId
+      Template.newEvent.date = null
+      Template.newEvent.comment = null
+      $('#windowBox').html Meteor.render ()-> Template.newEvent()
 
   'click button.editEvent': ()->
     Template.newEvent.eventId = this._id

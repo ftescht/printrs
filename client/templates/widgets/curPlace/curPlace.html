@@ -4,12 +4,13 @@
         <legend>
             {{place.name}}
             <div class="btn-group pull-right">
-                <button id="editCurPlace" class="btn btn-small">Edit</button>
+                <button id="addEvent" class="btn btn-small">Add event</button>
+                <button id="editPlace" class="btn btn-small">Edit</button>
                 {{#if canDel}}
                     <button class="btn btn-small btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
                     <ul class="dropdown-menu">
                         <li><a href="#">No</a></li>
-                        <li><a id="removeCurPlace" href="#">Yes</a></li>
+                        <li><a id="removePlace" href="#">Yes</a></li>
                     </ul>
                 {{/if}}
             </div>
