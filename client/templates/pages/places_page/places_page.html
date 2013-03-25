@@ -1,0 +1,29 @@
+<template name="places_page">
+
+    <div id="content" class="container">
+        <div class="row">
+
+            <div class="span3">
+                <legend>
+                    Places
+                    <div class="btn-group pull-right">
+                        <button id="places_page_placeAdd" class="btn btn-small" data-toggle="modal">Add Place</button>
+                    </div>
+                </legend>
+                <ul id="places_page_placesList" class="clList nav nav-tabs nav-stacked">
+                    {{#each places}}
+                    <li class="{{placeSelectedClass}}">
+                        <a id="{{_id}}" class="places_page_place {{stateStyle}}" href="#" rel="tooltip" title="{{descr}}">
+                            <i class="icon-chevron-right"></i>
+                            {{name}}
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+
+            <div id="placeBox" class="span9"></div>
+        </div>
+    </div>
+
+</template>

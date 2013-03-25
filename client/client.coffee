@@ -23,17 +23,19 @@ addClassColor = (id, color) ->
   style = $('<style>.eventType' + id + ' { background: ' + color + ' !important; }</style>')
   $('html > head').append style
 
-Meteor.Router.add
-  '/': 'cartridgesPage'
-  '/users': 'usersPage'
-  '/eventTypes': 'eventTypesPage'
-  '/places': 'placesPage'
-
 Meteor.Router.filters
   'checkLoggedIn': (page)->
     if Meteor.user()
       return page
     else
-      return 'signin'
+      return 'signInPage'
 
-Meteor.Router.filter('checkLoggedIn');
+Meteor.Router.filter 'checkLoggedIn'
+
+Meteor.Router.add
+  '/': 'cartridgesPage'
+  '/users': 'usersPage'
+  '/eventTypes': 'eventTypesPage'
+  '/places': 'placesPage',
+  '/signin': 'signInPage'
+
