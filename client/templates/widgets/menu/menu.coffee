@@ -1,8 +1,8 @@
 Template.menu.isLogin = ()->
-    return Meteor.user() != null
+  return Meteor.user() != null
 
 Template.menu.isAdmin = ()->
-    return Meteor.user() and Meteor.user().group == 'admin'
+  return Meteor.user() and Meteor.user().group == 'admin'
 
 Template.menu.isCartridges = ()->
   return "active" if Meteor.Router.page() == 'cartridgesPage'
@@ -21,5 +21,5 @@ Template.menu.isEventTypes = ()->
   return ""
 
 Template.menu.events
-    'click #logoutLink': () ->
-        Meteor.logout()
+  'click #logoutLink': () ->
+    Meteor.logout()

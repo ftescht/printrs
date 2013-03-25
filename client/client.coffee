@@ -1,11 +1,10 @@
-
 Meteor.subscribe 'all-users'
 
 EventTypes = new Meteor.Collection 'eventTypes'
 Meteor.subscribe 'all-eventtypes', ()->
-    eTypes = EventTypes.find {}
-    eTypes.forEach (item) ->
-        addClassColor item._id, item.color
+  eTypes = EventTypes.find {}
+  eTypes.forEach (item) ->
+    addClassColor item._id, item.color
 
 Places = new Meteor.Collection 'places'
 Meteor.subscribe 'all-places'
@@ -17,24 +16,24 @@ Events = new Meteor.Collection 'events'
 Meteor.subscribe 'all-events'
 
 alertBox = (id, text) ->
-    alertHtml = '<div class="alert"><a class="close" data-dismiss="alert" href="#">&times;</a><strong>'+text+'</strong></div>'
-    $('#'+id).html alertHtml
+  alertHtml = '<div class="alert"><a class="close" data-dismiss="alert" href="#">&times;</a><strong>' + text + '</strong></div>'
+  $('#' + id).html alertHtml
 
 addClassColor = (id, color) ->
-    style = $('<style>.eventType'+id+' { background: '+color+' !important; }</style>')
-    $('html > head').append style
-    
+  style = $('<style>.eventType' + id + ' { background: ' + color + ' !important; }</style>')
+  $('html > head').append style
+
 Meteor.Router.add
-    '/'           : 'cartridgesPage'
-    '/users'      : 'usersPage'
-    '/eventTypes' : 'eventTypesPage'
-    '/places'     : 'placesPage'
+  '/': 'cartridgesPage'
+  '/users': 'usersPage'
+  '/eventTypes': 'eventTypesPage'
+  '/places': 'placesPage'
 
 Meteor.Router.filters
-    'checkLoggedIn': (page)->
-        if Meteor.user()
-            return page
-        else
-            return 'signin'
+  'checkLoggedIn': (page)->
+    if Meteor.user()
+      return page
+    else
+      return 'signin'
 
 Meteor.Router.filter('checkLoggedIn');
