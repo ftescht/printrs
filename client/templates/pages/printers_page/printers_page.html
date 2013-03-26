@@ -1,0 +1,29 @@
+<template name="printers_page">
+
+    <div id="content" class="container">
+        <div class="row">
+
+            <div class="span3">
+                <legend>
+                    Printers
+                    <div class="btn-group pull-right">
+                        <button id="printers_page_printerAdd" class="btn btn-small" data-toggle="modal">Add printer</button>
+                    </div>
+                </legend>
+                <ul id="printers_page_printersList" class="clList nav nav-tabs nav-stacked">
+                    {{#each printers}}
+                    <li class="{{printerSelectedClass}}">
+                        <a id="{{_id}}" class="printers_page_printer" href="#" rel="tooltip" title="{{descr}}">
+                            <i class="icon-chevron-right"></i>
+                            {{name}}
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+
+            <div id="printerBox" class="span9"></div>
+        </div>
+    </div>
+
+</template>

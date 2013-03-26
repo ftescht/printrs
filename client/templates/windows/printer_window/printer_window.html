@@ -1,0 +1,37 @@
+<template name="printer_window">
+
+    <div id="printer_window" class="modal hide fade" role="dialog" tabindex="-1">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 id="printer_window_title">Add Printer</h3>
+        </div>
+        <div class="modal-body">
+
+            <div id="printer_window_alert"></div>
+
+            <div class="form-horizontal">
+
+                <div class="control-group">
+                    <label class="control-label" for="printer_window_name">Name</label>
+                    <div class="controls">
+                        <input id="printer_window_name" type="text" placeholder="Name">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="printer_window_descr">Description</label>
+                    <div class="controls">
+                        <input id="printer_window_descr" type="text" placeholder="Description">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="printer_window_save" class="btn btn-primary yes">Save</button>
+        </div>
+    </div>
+
+</template>

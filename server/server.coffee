@@ -1,7 +1,7 @@
 
 Accounts.config
     sendVerificationEmail: false
-    forbidClientAccountCreation: false
+    forbidClientAccountCreation: true
 
 Accounts.onCreateUser (options, user) ->
     #if user.username == 'admin' or user.username == 'administrator'

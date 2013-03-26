@@ -1,0 +1,19 @@
+<template name="printer_widget">
+
+    {{#if isVisible}}
+        <legend>
+            {{printer.name}}
+            <div class="btn-group pull-right">
+                <button id="printer_widget_printerEdit" class="btn btn-small">Edit</button>
+                {{#if canDel}}
+                    <button class="btn btn-small btn-danger dropdown-toggle" data-toggle="dropdown">Remove</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">No</a></li>
+                        <li><a id="printer_widget_printerRemove" href="#">Yes</a></li>
+                    </ul>
+                {{/if}}
+            </div>
+        </legend>
+    {{/if}}
+
+</template>

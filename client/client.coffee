@@ -9,6 +9,9 @@ Meteor.subscribe 'all-eventtypes', ()->
 Places = new Meteor.Collection 'places'
 Meteor.subscribe 'all-places'
 
+Printers = new Meteor.Collection 'printers'
+Meteor.subscribe 'all-printers'
+
 Cartridges = new Meteor.Collection 'cartridges'
 Meteor.subscribe 'all-cartridges'
 
@@ -37,5 +40,6 @@ Meteor.Router.add
   '/users': 'usersPage'
   '/eventTypes': 'eventTypesPage'
   '/places': 'placesPage',
+  '/printers': 'printersPage',
   '/signin': 'signInPage'
 

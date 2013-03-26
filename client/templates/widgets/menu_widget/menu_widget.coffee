@@ -17,6 +17,10 @@ Template.menu_widget.isPlaces = ()->
   return "active" if Meteor.Router.page() == 'placesPage'
   return ""
 
+Template.menu_widget.isPrinters = ()->
+  return "active" if Meteor.Router.page() == 'printersPage'
+  return ""
+
 Template.menu_widget.isUsers = ()->
   return "active" if Meteor.Router.page() == 'usersPage'
   return ""
